@@ -8,15 +8,19 @@ import testRoutes from './routes/test';
 import resourceRoutes from './routes/testing';
 import indexRoutes from './routes/indexing';
 import postRoutes from './routes/post.routes';
+import userRoutes from './routes/user.routes';
+import { dbConfig } from './config/sequelizeConfig';
 
 const NAMESPACE = 'Server';
 const router = express();
-// db.sequelize.sync();
-// // force: true will drop the table if it already exists
-// db.sequelize.sync({ force: false }).then(() => {
-//     console.log('Drop and Resync Database with { force: true }');
-//     //initial();
-// });
+
+//dbConfig.sync;
+// force: true will drop the table if it already exists
+
+dbConfig.sync({ force: false }).then(() => {
+    console.log('Drop and Resync Database with { force: true }');
+    //initial();
+});
 /** Log the request */
 router.use((req, res, next) => {
     /** Log the req */
@@ -53,6 +57,7 @@ router.use('/api/sample', testRoutes);
 router.use('/api/sample', resourceRoutes);
 router.use('/api/sample', indexRoutes);
 router.use('/api/samples', postRoutes);
+router.use('/api/user', userRoutes);
 
 /** Error handling */
 router.use((req, res, next) => {
